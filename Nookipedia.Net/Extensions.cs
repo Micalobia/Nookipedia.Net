@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Nookipedia.Net
 {
@@ -36,7 +35,7 @@ namespace Nookipedia.Net
             }
         }
 
-        public static bool Exists<T>(this T self) where T : class => !(self is null);
+        public static bool Exists<T>(this T self) where T : class => self is not null;
 
         public static NameValueCollection Query<T>(this IEnumerable<Tuple<string, T>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple.Item2.ToString()));
         public static NameValueCollection Query(this IEnumerable<Tuple<string, string>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple.Item2));
@@ -60,5 +59,6 @@ namespace Nookipedia.Net
         }
 
         public static string QueryString(this IEnumerable<NamedValue> self) => string.Join('&', self.Select(x => $"{x.Name}={x.Value}"));
+        public static NameValueCollection NameValueCollection(this IEnumerable<NamedValue> self) => self.Where(x => x.Exists()).Aggregate(new NameValueCollection(self.Count()), (ret, value) => ret.With(value.Name, value.Value.ToString()));
     }
 }
