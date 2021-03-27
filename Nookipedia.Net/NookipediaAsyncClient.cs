@@ -70,10 +70,10 @@ namespace Nookipedia.Net
         private Task<T> FetchAsync<T>(string endpoint, params NamedValue[] parameters) => FetchAsync<T>(endpoint, default, parameters);
         private async Task<T> FetchAsync<T>(string endpoint, CancellationToken token, params NamedValue[] parameters)
         {
-            using Stream stream = await GetResponseStream(endpoint, token, parameters);
+            using Stream stream = await GetResponseStreamAsync(endpoint, token, parameters);
             return await JsonSerializer.DeserializeAsync<T>(stream, Options, token);
         }
-        private Task<Stream> GetResponseStream(string endpoint, CancellationToken cancellationToken, params NamedValue[] parameters) => Client.GetStreamAsync(BuildEndpoint(endpoint, parameters));
+        private Task<Stream> GetResponseStreamAsync(string endpoint, CancellationToken cancellationToken, params NamedValue[] parameters) => Client.GetStreamAsync(BuildEndpoint(endpoint, parameters));
 
         private static string BuildEndpoint(string endpoint, params NamedValue[] parameters) => $"{endpoint}?{parameters.QueryString()}";
 

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Nookipedia.Net
 {
@@ -50,8 +53,8 @@ namespace Nookipedia.Net
 
         public static T[] Concat<T>(this T[] self, params T[] other)
         {
-            if (self is null) throw new ArgumentNullException("self");
-            if (other is null) throw new ArgumentNullException("other");
+            if (self is null) throw new ArgumentNullException(nameof(self));
+            if (other is null) throw new ArgumentNullException(nameof(other));
             T[] ret = new T[self.Length + other.Length];
             self.CopyTo(ret, 0);
             other.CopyTo(ret, self.Length);
@@ -60,5 +63,15 @@ namespace Nookipedia.Net
 
         public static string QueryString(this IEnumerable<NamedValue> self) => string.Join('&', self.Select(x => $"{x.Name}={x.Value}"));
         public static NameValueCollection NameValueCollection(this IEnumerable<NamedValue> self) => self.Where(x => x.Exists()).Aggregate(new NameValueCollection(self.Count()), (ret, value) => ret.With(value.Name, value.Value.ToString()));
+
+        public static void Result(this Task self) => self.GetAwaiter().GetResult();
+        public static T Result<T>(this Task<T> self) => self.GetAwaiter().GetResult();
+
+        public static byte[] ReadBytes(this Stream self)
+        {
+            using MemoryStream ms = new();
+            self.CopyTo(ms);
+            return ms.ToArray();
+        }
     }
 }
