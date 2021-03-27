@@ -1,39 +1,35 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
-    [JsonObject]
-    public class Recipe : BaseNookObject, IEndpoint
+    public record Recipe : BaseNookObject, IEndpoint
     {
-        [JsonProperty("serial_id")] public int GameID { get; private set; }
-        [JsonProperty("buy")] public Price[] BuyPrices { get; private set; }
-        [JsonProperty("sell")] public int SellPrice { get; private set; }
-        [JsonProperty("recipes_to_unlock")] public int RecipeRequirement { get; private set; }
-        [JsonProperty("availability")] public Availability[] Availiabilities { get; private set; }
-        [JsonProperty("materials")] public Material[] Materials { get; private set; }
+        [JsonPropertyName("serial_id")] public int GameID { get; init; }
+        [JsonPropertyName("buy")] public Price[] BuyPrices { get; init; }
+        [JsonPropertyName("sell")] public int SellPrice { get; private init; }
+        [JsonPropertyName("recipes_to_unlock")] public int RecipeRequirement { get; init; }
+        [JsonPropertyName("availability")] public Availability[] Availiabilities { get; init; }
+        [JsonPropertyName("materials")] public Material[] Materials { get; init; }
 
         public string Endpoint(string sub) => "nh/recipes/" + sub;
         public string Endpoint() => "nh/recipes";
 
-        [JsonObject]
-        public class Price
+        public record Price
         {
-            [JsonProperty("price")] public int Cost { get; private set; }
-            [JsonProperty("currency")] public Currency Currency { get; private set; }
+            [JsonPropertyName("price")] public int Cost { get; init; }
+            [JsonPropertyName("currency")] public Currency Currency { get; init; }
         }
 
-        [JsonObject]
-        public class Availability
+        public record Availability
         {
-            [JsonProperty("from")] public string From { get; private set; }
-            [JsonProperty("note")] public string Note { get; private set; }
+            [JsonPropertyName("from")] public string From { get; init; }
+            [JsonPropertyName("note")] public string Note { get; init; }
         }
 
-        [JsonObject]
-        public class Material
+        public record Material
         {
-            [JsonProperty("name")] public string Name { get; private set; }
-            [JsonProperty("count")] public int Count { get; private set; }
+            [JsonPropertyName("name")] public string Name { get; init; }
+            [JsonPropertyName("count")] public int Count { get; init; }
         }
     }
 }

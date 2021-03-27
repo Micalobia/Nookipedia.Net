@@ -1,28 +1,22 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
-    [JsonObject]
-    public class Artwork : BaseNookObject, IEndpoint
+    public record Artwork : BaseNookObject, IEndpoint
     {
-        [JsonProperty("has_fake")] public bool HasFake { get; private set; }
-        [JsonProperty("fake_image_url")] public string FakeImageURL { get; private set; }
-        [JsonProperty("art_name")] public string IRLName { get; private set; }
-        [JsonProperty("author")] public string IRLAuthor { get; private set; }
-        [JsonProperty("year")] public string IRLCreationYear { get; private set; }
-        [JsonProperty("art_style")] public string Artstyle { get; private set; }
-        [JsonProperty("description")] public string Description { get; private set; }
-        [JsonProperty("buy")] public int BuyPrice { get; private set; }
-        [JsonProperty("sell")] public int SellPrice { get; private set; }
-        [JsonProperty("availability")] public string Availability { get; private set; }
-        [JsonProperty("authenticity")] public string DescriptionOfFake { get; private set; }
-        [JsonProperty("width")] public float Width { get; private set; }
-        [JsonProperty("length")] public float Length { get; private set; }
+        [JsonPropertyName("has_fake")] public bool HasFake { get; init; }
+        [JsonPropertyName("fake_image_url")] public string FakeImageURL { get; init; }
+        [JsonPropertyName("art_name")] public string IRLName { get; init; }
+        [JsonPropertyName("author")] public string IRLAuthor { get; init; }
+        [JsonPropertyName("year")] public string IRLCreationYear { get; init; }
+        [JsonPropertyName("art_style")] public string Artstyle { get; init; }
+        [JsonPropertyName("description")] public string Description { get; init; }
+        [JsonPropertyName("buy")] public int BuyPrice { get; init; }
+        [JsonPropertyName("sell")] public int SellPrice { get; init; }
+        [JsonPropertyName("availability")] public string Availability { get; init; }
+        [JsonPropertyName("authenticity")] public string DescriptionOfFake { get; init; }
+        [JsonPropertyName("width")] public float Width { get; init; }
+        [JsonPropertyName("length")] public float Length { get; init; }
 
         public string Endpoint() => "nh/art";
         public string Endpoint(string sub) => "nh/art/" + sub;

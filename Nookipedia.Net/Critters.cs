@@ -1,52 +1,46 @@
-﻿using Newtonsoft.Json;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
-    [JsonObject]
-    public abstract class Critter : BaseNookObject, IEndpoint
+    public abstract record Critter : BaseNookObject, IEndpoint
     {
-        [JsonProperty("number")] public int CritterpediaNumber { get; private set; }
-        [JsonProperty("time")] public string Time { get; private set; }
-        [JsonProperty("location")] public string Location { get; private set; }
-        [JsonProperty("rarity")] public string Rarity { get; private set; }
-        [JsonProperty("total_catch")] public int CatchRequirement { get; private set; }
-        [JsonProperty("sell_nook")] public int SellPrice { get; private set; }
-        [JsonProperty("tank_width")] public float TankWidth { get; private set; }
-        [JsonProperty("tank_height")] public float TankHeight { get; private set; }
-        [JsonProperty("catchphrases")] public string[] Catchphrases { get; private set; }
-        [JsonProperty("north")] public Region North { get; private set; }
-        [JsonProperty("south")] public Region South { get; private set; }
+        [JsonPropertyName("number")] public int CritterpediaNumber { get; init; }
+        [JsonPropertyName("time")] public string Time { get; init; }
+        [JsonPropertyName("location")] public string Location { get; init; }
+        [JsonPropertyName("rarity")] public string Rarity { get; init; }
+        [JsonPropertyName("total_catch")] public int CatchRequirement { get; init; }
+        [JsonPropertyName("sell_nook")] public int SellPrice { get; init; }
+        [JsonPropertyName("tank_width")] public float TankWidth { get; init; }
+        [JsonPropertyName("tank_height")] public float TankHeight { get; init; }
+        [JsonPropertyName("catchphrases")] public string[] Catchphrases { get; init; }
+        [JsonPropertyName("north")] public Region North { get; init; }
+        [JsonPropertyName("south")] public Region South { get; init; }
 
         public abstract string Endpoint();
         public abstract string Endpoint(string name);
     }
 
-    [JsonObject]
-    public sealed class Fish : Critter
+    public sealed record Fish : Critter
     {
-        [JsonProperty("shadow_size")] public string ShadowSize { get; private set; }
-        [JsonProperty("sell_cj")] public string SellPriceCJ { get; private set; }
+        [JsonPropertyName("shadow_size")] public string ShadowSize { get; init; }
+        [JsonPropertyName("sell_cj")] public string SellPriceCJ { get; init; }
 
         public override string Endpoint() => "nh/fish";
         public override string Endpoint(string name) => "nh/fish/" + name;
     }
 
-    [JsonObject]
-    public sealed class Bug : Critter
+    public sealed record Bug : Critter
     {
-        [JsonProperty("sell_flick")] public string SellPriceFlick { get; private set; }
+        [JsonPropertyName("sell_flick")] public string SellPriceFlick { get; init; }
 
         public override string Endpoint() => "nh/bugs";
         public override string Endpoint(string name) => "nh/bugs/" + name;
     }
 
-    [JsonObject]
-    public sealed class SeaCreature : Critter
+    public sealed record SeaCreature : Critter
     {
-        [JsonProperty("shadow_size")] public string ShadowSize { get; private set; }
-        [JsonProperty("shadow_movement")] public string ShadowMovement { get; private set; }
+        [JsonPropertyName("shadow_size")] public string ShadowSize { get; init; }
+        [JsonPropertyName("shadow_movement")] public string ShadowMovement { get; init; }
 
         public override string Endpoint() => "nh/sea";
         public override string Endpoint(string name) => "nh/sea/" + name;

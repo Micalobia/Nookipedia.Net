@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Currency
     {
         [EnumMember(Value = "")] None,
@@ -12,7 +11,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "Nook Miles")] NookMiles
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Species
     {
         [EnumMember(Value = "")] None,
@@ -53,7 +52,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "Wolf")] Wolf
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Personality
     {
         [EnumMember(Value = "")] None,
@@ -67,7 +66,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "Snooty")] Snooty
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Gender
     {
         [EnumMember(Value = "")] None,
@@ -75,7 +74,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "Female")] Female
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum StarSign
     {
         [EnumMember(Value = "")] None,
@@ -93,7 +92,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "Pisces")] Pisces
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Game
     {
         [EnumMember(Value = "")] None,
@@ -110,7 +109,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "PC")] PocketCamp
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum SubPersonality
     {
         [EnumMember(Value = "")] None,
@@ -118,7 +117,7 @@ namespace Nookipedia.Net
         [EnumMember(Value = "B")] B
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Hobby
     {
         [EnumMember(Value = "")] None,

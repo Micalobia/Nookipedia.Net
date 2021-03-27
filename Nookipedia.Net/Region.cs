@@ -1,40 +1,37 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
-    [JsonObject]
-    public class Region
+    public record Region
     {
-        [JsonProperty("availability_array")] public Availability[] Availabilities { get; set; }
-        [JsonProperty("times_by_month")] public TimesByMonth Times { get; set; }
-        [JsonProperty("months")] public string Months { get; set; }
-        [JsonProperty("months_array")] public int[] ValidMonths { get; set; }
+        [JsonPropertyName("availability_array")] public Availability[] Availabilities { get; set; }
+        [JsonPropertyName("times_by_month")] public TimesByMonth Times { get; set; }
+        [JsonPropertyName("months")] public string Months { get; set; }
+        [JsonPropertyName("months_array")] public int[] ValidMonths { get; set; }
 
-        [JsonObject]
-        public class Availability
+        public record Availability
         {
-            [JsonProperty("months")] public string Months { get; set; }
-            [JsonProperty("time")] public string Time { get; set; }
+            [JsonPropertyName("months")] public string Months { get; set; }
+            [JsonPropertyName("time")] public string Time { get; set; }
         }
 
-        [JsonObject]
-        public class TimesByMonth : IEnumerable<string>
+        public record TimesByMonth : IEnumerable<string>
         {
-            [JsonProperty("1")] public string January { get; set; } = null;
-            [JsonProperty("2")] public string February { get; set; } = null;
-            [JsonProperty("3")] public string March { get; set; } = null;
-            [JsonProperty("4")] public string April { get; set; } = null;
-            [JsonProperty("5")] public string May { get; set; } = null;
-            [JsonProperty("6")] public string June { get; set; } = null;
-            [JsonProperty("7")] public string July { get; set; } = null;
-            [JsonProperty("8")] public string August { get; set; } = null;
-            [JsonProperty("9")] public string September { get; set; } = null;
-            [JsonProperty("10")] public string October { get; set; } = null;
-            [JsonProperty("11")] public string November { get; set; } = null;
-            [JsonProperty("12")] public string December { get; set; } = null;
+            [JsonPropertyName("1")] public string January { get; set; } = null;
+            [JsonPropertyName("2")] public string February { get; set; } = null;
+            [JsonPropertyName("3")] public string March { get; set; } = null;
+            [JsonPropertyName("4")] public string April { get; set; } = null;
+            [JsonPropertyName("5")] public string May { get; set; } = null;
+            [JsonPropertyName("6")] public string June { get; set; } = null;
+            [JsonPropertyName("7")] public string July { get; set; } = null;
+            [JsonPropertyName("8")] public string August { get; set; } = null;
+            [JsonPropertyName("9")] public string September { get; set; } = null;
+            [JsonPropertyName("10")] public string October { get; set; } = null;
+            [JsonPropertyName("11")] public string November { get; set; } = null;
+            [JsonPropertyName("12")] public string December { get; set; } = null;
 
             public string this[int index]
             {
@@ -103,11 +100,10 @@ namespace Nookipedia.Net
         }
     }
 
-    [JsonObject]
-    public class BaseNookObject
+    public record BaseNookObject
     {
-        [JsonProperty("name")] public string Name { get; private set; }
-        [JsonProperty("url")] public string URL { get; private set; }
-        [JsonProperty("image_url")] public string ImageURL { get; private set; }
+        [JsonPropertyName("name")] public string Name { get; init; }
+        [JsonPropertyName("url")] public string URL { get; init; }
+        [JsonPropertyName("image_url")] public string ImageURL { get; init; }
     }
 }

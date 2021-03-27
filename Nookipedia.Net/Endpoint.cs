@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nookipedia.Net
+﻿namespace Nookipedia.Net
 {
     public interface IListEndpoint
     {
@@ -20,13 +16,13 @@ namespace Nookipedia.Net
 
     internal static class SingleEndpoint<T> where T : ISingleEndpoint, new()
     {
-        private static readonly T _value = new T();
-        public static string Endpoint(string sub) => _value.Endpoint(sub);
+        private static readonly T _value = new();
+        public static string Endpoint(string name) => _value.Endpoint(name);
     }
 
     internal static class ListEndpoint<T> where T : IListEndpoint, new()
     {
-        private static readonly T _value = new T();
+        private static readonly T _value = new();
         public static string Endpoint() => _value.Endpoint();
     }
 }
