@@ -6,7 +6,7 @@
     <Version>1.3.0.1</Version>
     <Authors>Micalobia</Authors>
     <PackageId>Micalobia_Nookipedia.Net</PackageId>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Copyright></Copyright>
     <PackageLicenseUrl>https://choosealicense.com/licenses/gpl-3.0/</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Micalobia/Nookipedia.Net</PackageProjectUrl>
