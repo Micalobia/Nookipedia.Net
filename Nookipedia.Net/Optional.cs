@@ -2,22 +2,32 @@
 {
     public sealed class Optional<T>
     {
-        private readonly bool _present;
-        private readonly T _value;
 
-        public bool Present => _present;
-        public T Value => _value;
+        public bool Present { get; init; }
+        public T Value { get; init; }
 
-        private Optional(bool present, T value = default)
+        private Optional()
         {
-            _present = present;
-            _value = value;
+            Present = false;
+            Value = default;
         }
 
-        public static Optional<T> Of(T value) => new Optional<T>(true, value);
-        public static Optional<T> Empty() => new Optional<T>(false);
+        public Optional(T value)
+        {
+            Present = true;
+            Value = value;
+        }
 
-        public static implicit operator Optional<T>(T value) => value is null ? Empty() : Of(value);
+        public T GetOrDefault(T @default = default) => Present ? Value : @default;
+
+        public Optional<T> Or(Optional<T> other) => GetOrDefault(other.GetOrDefault());
+
+        public static Optional<T> Of(T value) => new(value);
+        public static Optional<T> Empty() => new();
+
+        public override string ToString() => $"Optional{{{(Present ? Value.ToString() : "Empty")}}}";
+
+        public static implicit operator Optional<T>(T value) => value is null ? new() : new(value);
         public static implicit operator T(Optional<T> value) => value.Present ? value.Value : throw new MissingOptionalException();
     }
 }
