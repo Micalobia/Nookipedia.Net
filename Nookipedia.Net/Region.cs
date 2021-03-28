@@ -84,7 +84,7 @@ namespace Nookipedia.Net
 
             private class Enumerator : IEnumerator<string>
             {
-                private TimesByMonth _self;
+                private readonly TimesByMonth _self;
                 private int _index = -1;
 
                 public Enumerator(TimesByMonth self) => _self = self;
