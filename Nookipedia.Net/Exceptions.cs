@@ -13,6 +13,6 @@ namespace Nookipedia.Net
 
     class MissingOptionalException : Exception
     {
-        public MissingOptionalException(Exception innerException = null) : base(null, innerException) { }
+        public MissingOptionalException(Exception? innerException = null) : base(null, innerException) { }
     }
 }

@@ -12,7 +12,7 @@ namespace Nookipedia.Net
 {
     internal static class Extensions
     {
-        public static NameValueCollection With(this NameValueCollection self, string name, string value, bool mutate = true)
+        public static NameValueCollection With(this NameValueCollection self, string? name, string? value, bool mutate = true)
         {
             if (mutate)
             {
@@ -38,18 +38,22 @@ namespace Nookipedia.Net
             }
         }
 
-        public static bool Exists<T>(this T self) where T : class => self is not null;
+        public static IList<T> WithRange<T>(this IList<T> self, IEnumerable<T> elements) => elements.Aggregate(self, (_self, element) => self.With(element));
+        public static IList<T> WithRange<T, K>(this IList<T> self, IEnumerable<K> elements, Func<K, T> func) => elements.Aggregate(self, (_self, element) => self.With(func(element)));
 
-        public static NameValueCollection Query<T>(this IEnumerable<Tuple<string, T>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple.Item2.ToString()));
+        public static bool Exists<T>(this T? self) where T : class => self is not null;
+
+        public static NameValueCollection Query<T>(this IEnumerable<Tuple<string, T>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple?.Item2?.ToString()));
         public static NameValueCollection Query(this IEnumerable<Tuple<string, string>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple.Item2));
 
-        public static string Value<T>(this T self) where T : Enum
+        public static string? Value<T>(this T self) where T : Enum
             => typeof(T)
                 .GetTypeInfo()
                 .DeclaredMembers
                 .SingleOrDefault(x => x.Name == self.ToString())
                 ?.GetCustomAttribute<EnumMemberAttribute>(false)
                 ?.Value;
+
 
         public static T[] Concat<T>(this T[] self, params T[] other)
         {
@@ -62,16 +66,16 @@ namespace Nookipedia.Net
         }
 
         public static string QueryString(this IEnumerable<NamedValue> self) => string.Join('&', self.Select(x => $"{x.Name}={x.Value}"));
-        public static NameValueCollection NameValueCollection(this IEnumerable<NamedValue> self) => self.Where(x => x.Exists()).Aggregate(new NameValueCollection(self.Count()), (ret, value) => ret.With(value.Name, value.Value.ToString()));
+        public static NameValueCollection NameValueCollection(this IEnumerable<NamedValue> self) => self.Where(x => x.Exists()).Aggregate(new NameValueCollection(self.Count()), (ret, value) => ret.With(value.Name, value?.Value?.ToString()));
 
         public static void Result(this Task self) => self.GetAwaiter().GetResult();
         public static T Result<T>(this Task<T> self) => self.GetAwaiter().GetResult();
 
         public static byte[] ReadBytes(this Stream self)
         {
-            using MemoryStream ms = new();
+            using MemoryStream ms = new((int)self.Length);
             self.CopyTo(ms);
-            return ms.ToArray();
+            return ms.Capacity == ms.Length ? ms.GetBuffer() : ms.ToArray();
         }
     }
 }

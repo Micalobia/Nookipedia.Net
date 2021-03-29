@@ -19,10 +19,10 @@ namespace Nookipedia.Net
 
         private HttpClient Client => _client;
 
-        public NookipediaClient(string apikey, HttpClient client = null)
+        public NookipediaClient(string apikey, HttpClient? client = null)
         {
             _client = client ?? new HttpClient();
-            Client.BaseAddress = new Uri("https://api.nookipedia.com");
+            Client.BaseAddress ??= new Uri("https://api.nookipedia.com");
             Client.DefaultRequestHeaders.Add("Accept-Version", NookipediaAPIVersion.ToString(3));
             Client.DefaultRequestHeaders.Add("X-API-KEY", apikey);
         }
@@ -65,22 +65,22 @@ namespace Nookipedia.Net
 
         public Villager[] GetVillagers() => FetchList<Villager>();
         public Villager[] GetVillagers(string name) => FetchList<Villager>(("name", name));
-        public Villager[] GetVillagers(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        public Villager[] GetVillagers(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
             => FetchList<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
         public string[] GetVillagerNames() => FetchNames<Villager>();
         public string[] GetVillagerNames(string name) => FetchNames<Villager>(("name", name));
-        public string[] GetVillagerNames(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, params Game[] games)
+        public string[] GetVillagerNames(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
             => FetchNames<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
 
-        private static NamedValue[] BuildVillagerQuery(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        private static NamedValue[] BuildVillagerQuery(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
-            List<NamedValue> ret = new();
+            IList<NamedValue> ret = new List<NamedValue>();
             if (name.Exists()) ret.Add(("name", name));
             if (personality != Personality.None) ret.Add(("personality", personality.Value()));
             if (birthmonth.Exists()) ret.Add(("birthmonth", birthmonth));
             if (birthday > 0 && birthday <= 31) ret.Add(("birthday", birthday));
             if (includeNHDetails) ret.Add(("nhdetails", "true"));
-            return games.Aggregate(ret, (self, game) => self.With(("game", game)) as List<NamedValue>).ToArray();
+            return ret.WithRange(games, game => ("game", game)).ToArray();
         }
 
         private string[] FetchNames<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => Fetch<string[]>(ListEndpoint<T>.Endpoint(), parameters.Concat(("excludedetails", "true")));
@@ -89,7 +89,7 @@ namespace Nookipedia.Net
         private T Fetch<T>(string endpoint, params NamedValue[] parameters)
         {
             using Stream stream = GetResponseStream(endpoint, parameters);
-            return JsonSerializer.Deserialize<T>(stream.ReadBytes(), Options);
+            return JsonSerializer.Deserialize<T>(stream.ReadBytes(), Options) ?? throw new JsonException("Deserialized to null; Report to Nookipedia.Net");
         }
 
         private Optional<string[]> TryFetchNames<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => TryFetch<string[]>(ListEndpoint<T>.Endpoint(), parameters.Concat(("excludedetails", "true")));

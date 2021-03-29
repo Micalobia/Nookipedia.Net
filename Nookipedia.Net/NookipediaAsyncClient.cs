@@ -20,7 +20,7 @@ namespace Nookipedia.Net
         private readonly HttpClient _client;
         private HttpClient Client => _client;
 
-        public NookipediaAsyncClient(string apikey, HttpClient client = null)
+        public NookipediaAsyncClient(string apikey, HttpClient? client = null)
         {
             _client = client ?? new HttpClient();
             Client.BaseAddress ??= new Uri("https://api.nookipedia.com");
@@ -28,11 +28,11 @@ namespace Nookipedia.Net
             Client.DefaultRequestHeaders.Add("X-API-KEY", apikey);
         }
 
-        public Task<T> GetCritterAsync<T>(string name) where T : Critter, new() => FetchSingleAsync<T>(name);
-        public Task<T[]> GetCrittersAsync<T>() where T : Critter, new() => FetchListAsync<T>();
-        public Task<T[]> GetCrittersAsync<T>(string month) where T : Critter, new() => FetchListAsync<T>(("month", month));
-        public Task<string[]> GetCritterNamesAsync<T>() where T : Critter, new() => FetchNamesAsync<T>();
-        public Task<string[]> GetCritterNamesAsync<T>(string month) where T : Critter, new() => FetchNamesAsync<T>(("month", month));
+        public Task<T?> GetCritterAsync<T>(string name) where T : Critter, new() => FetchSingleAsync<T>(name);
+        public Task<T[]?> GetCrittersAsync<T>() where T : Critter, new() => FetchListAsync<T>();
+        public Task<T[]?> GetCrittersAsync<T>(string month) where T : Critter, new() => FetchListAsync<T>(("month", month));
+        public Task<string[]?> GetCritterNamesAsync<T>() where T : Critter, new() => FetchNamesAsync<T>();
+        public Task<string[]?> GetCritterNamesAsync<T>(string month) where T : Critter, new() => FetchNamesAsync<T>(("month", month));
 
         public Task<Optional<T>> TryGetCritterAsync<T>(string name) where T : Critter, new() => TryFetchSingleAsync<T>(name);
         public Task<Optional<T[]>> TryGetCrittersAsync<T>() where T : Critter, new() => TryFetchListAsync<T>();
@@ -40,11 +40,11 @@ namespace Nookipedia.Net
         public Task<Optional<string[]>> TryGetCritterNamesAsync<T>() where T : Critter, new() => TryFetchNamesAsync<T>();
         public Task<Optional<string[]>> TryGetCritterNamesAsync<T>(string month) where T : Critter, new() => TryFetchNamesAsync<T>(("month", month));
 
-        public Task<Artwork> GetArtworkAsync(string name) => FetchSingleAsync<Artwork>(name);
-        public Task<Artwork[]> GetArtworksAsync() => FetchListAsync<Artwork>();
-        public Task<Artwork[]> GetArtworksAsync(bool hasfake) => FetchListAsync<Artwork>(("hasfake", hasfake));
-        public Task<string[]> GetArtworkNamesAsync() => FetchNamesAsync<Artwork>();
-        public Task<string[]> GetArtworkNamesAsync(bool hasfake) => FetchNamesAsync<Artwork>(("hasfake", hasfake));
+        public Task<Artwork?> GetArtworkAsync(string name) => FetchSingleAsync<Artwork>(name);
+        public Task<Artwork[]?> GetArtworksAsync() => FetchListAsync<Artwork>();
+        public Task<Artwork[]?> GetArtworksAsync(bool hasfake) => FetchListAsync<Artwork>(("hasfake", hasfake));
+        public Task<string[]?> GetArtworkNamesAsync() => FetchNamesAsync<Artwork>();
+        public Task<string[]?> GetArtworkNamesAsync(bool hasfake) => FetchNamesAsync<Artwork>(("hasfake", hasfake));
 
         public Task<Optional<Artwork>> TryGetArtworkAsync(string name) => TryFetchSingleAsync<Artwork>(name);
         public Task<Optional<Artwork[]>> TryGetArtworksAsync() => TryFetchListAsync<Artwork>();
@@ -52,48 +52,48 @@ namespace Nookipedia.Net
         public Task<Optional<string[]>> TryGetArtworkNames() => TryFetchNamesAsync<Artwork>();
         public Task<Optional<string[]>> TryGetArtworkNames(bool hasfake) => TryFetchNamesAsync<Artwork>(("hasfake", hasfake));
 
-        public Task<Recipe> GetRecipeAsync(string name) => FetchSingleAsync<Recipe>(name);
-        public Task<Recipe[]> GetRecipesAsync(params string[] materials) => FetchListAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
-        public Task<string[]> GetRecipeNamesAsync(params string[] materials) => FetchNamesAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
+        public Task<Recipe?> GetRecipeAsync(string name) => FetchSingleAsync<Recipe>(name);
+        public Task<Recipe[]?> GetRecipesAsync(params string[] materials) => FetchListAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
+        public Task<string[]?> GetRecipeNamesAsync(params string[] materials) => FetchNamesAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
 
         public Task<Optional<Recipe>> TryGetRecipeAsync(string name) => TryFetchSingleAsync<Recipe>(name);
         public Task<Optional<Recipe[]>> TryGetRecipesAsync(params string[] materials) => TryFetchListAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
         public Task<Optional<string[]>> TryGetRecipeNamesAsync(params string[] materials) => TryFetchNamesAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
 
-        public Task<Villager[]> GetVillagersAsync() => FetchListAsync<Villager>();
-        public Task<Villager[]> GetVillagersAsync(string name) => FetchListAsync<Villager>(("name", name));
-        public Task<Villager[]> GetVillagersAsync(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        public Task<Villager[]?> GetVillagersAsync() => FetchListAsync<Villager>();
+        public Task<Villager[]?> GetVillagersAsync(string name) => FetchListAsync<Villager>(("name", name));
+        public Task<Villager[]?> GetVillagersAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
             => FetchListAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
-        public Task<string[]> GetVillagerNamesAsync() => FetchNamesAsync<Villager>();
-        public Task<string[]> GetVillagerNamesAsync(string name) => FetchNamesAsync<Villager>(("name", name));
-        public Task<string[]> GetVillagerNamesAsync(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, params Game[] games)
+        public Task<string[]?> GetVillagerNamesAsync() => FetchNamesAsync<Villager>();
+        public Task<string[]?> GetVillagerNamesAsync(string name) => FetchNamesAsync<Villager>(("name", name));
+        public Task<string[]?> GetVillagerNamesAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
             => FetchNamesAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
 
         public Task<Optional<Villager[]>> TryGetVillagersAsync() => TryFetchListAsync<Villager>();
         public Task<Optional<Villager[]>> TryGetVillagersAsync(string name) => TryFetchListAsync<Villager>(("name", name));
-        public Task<Optional<Villager[]>> TryGetVillagersAsync(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        public Task<Optional<Villager[]>> TryGetVillagersAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
             => TryFetchListAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
         public Task<Optional<string[]>> TryGetVillagerNamesAsync() => TryFetchNamesAsync<Villager>();
         public Task<Optional<string[]>> TryGetVillagerNamesAsync(string name) => TryFetchNamesAsync<Villager>(("name", name));
-        public Task<Optional<string[]>> TryGetVillagerNamesAsync(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, params Game[] games)
+        public Task<Optional<string[]>> TryGetVillagerNamesAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
             => TryFetchNamesAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
 
-        private static NamedValue[] BuildVillagerQuery(string name = null, Personality personality = Personality.None, string birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        private static NamedValue[] BuildVillagerQuery(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
-            List<NamedValue> ret = new();
+            IList<NamedValue> ret = new List<NamedValue>();
             if (name.Exists()) ret.Add(("name", name));
             if (personality != Personality.None) ret.Add(("personality", personality.Value()));
             if (birthmonth.Exists()) ret.Add(("birthmonth", birthmonth));
             if (birthday > 0 && birthday <= 31) ret.Add(("birthday", birthday));
             if (includeNHDetails) ret.Add(("nhdetails", "true"));
-            return games.Aggregate(ret, (self, game) => self.With(("game", game)) as List<NamedValue>).ToArray();
+            return ret.WithRange(games, game => ("game", game)).ToArray();
         }
 
-        private Task<string[]> FetchNamesAsync<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => FetchAsync<string[]>(ListEndpoint<T>.Endpoint(), parameters.Concat(("excludedetails", "true")));
-        private Task<T[]> FetchListAsync<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => FetchAsync<T[]>(ListEndpoint<T>.Endpoint(), parameters);
-        private Task<T> FetchSingleAsync<T>(string name, params NamedValue[] parameters) where T : ISingleEndpoint, new() => FetchAsync<T>(SingleEndpoint<T>.Endpoint(name), parameters);
-        private Task<T> FetchAsync<T>(string endpoint, params NamedValue[] parameters) => FetchAsync<T>(endpoint, default, parameters);
-        private async Task<T> FetchAsync<T>(string endpoint, CancellationToken token, params NamedValue[] parameters)
+        private Task<string[]?> FetchNamesAsync<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => FetchAsync<string[]>(ListEndpoint<T>.Endpoint(), parameters.Concat(("excludedetails", "true")));
+        private Task<T[]?> FetchListAsync<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => FetchAsync<T[]>(ListEndpoint<T>.Endpoint(), parameters);
+        private Task<T?> FetchSingleAsync<T>(string name, params NamedValue[] parameters) where T : ISingleEndpoint, new() => FetchAsync<T>(SingleEndpoint<T>.Endpoint(name), parameters);
+        private Task<T?> FetchAsync<T>(string endpoint, params NamedValue[] parameters) => FetchAsync<T>(endpoint, default, parameters);
+        private async Task<T?> FetchAsync<T>(string endpoint, CancellationToken token, params NamedValue[] parameters)
         {
             using Stream stream = await GetResponseStreamAsync(endpoint, token, parameters);
             return await JsonSerializer.DeserializeAsync<T>(stream, Options, token);
