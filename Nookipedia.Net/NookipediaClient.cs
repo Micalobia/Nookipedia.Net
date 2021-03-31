@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -118,8 +118,11 @@ namespace Nookipedia.Net
 
         private static string BuildEndpoint(string endpoint, params NamedValue[] parameters) => $"{endpoint}?{parameters.QueryString()}";
 
-        public void Dispose() => Client.Dispose();
+        public void Dispose() {
+            Client.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
-        ~NookipediaClient() => Dispose();
+        ~NookipediaClient() => Client.Dispose();
     }
 }
