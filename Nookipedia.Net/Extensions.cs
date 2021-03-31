@@ -22,6 +22,12 @@ namespace Nookipedia.Net
             else return new NameValueCollection(self.Count + 1, self).With(name, value);
         }
 
+        public static void ReadUntil(ref this Utf8JsonReader reader, JsonTokenType token)
+        {
+            reader.Read();
+            while (reader.TokenType != token) reader.Read();
+        }
+
         public static IList<T> With<T>(this IList<T> self, T value, bool mutate = true)
         {
             if (mutate)
@@ -73,7 +79,7 @@ namespace Nookipedia.Net
 
         public static byte[] ReadBytes(this Stream self)
         {
-            using MemoryStream ms = new((int)self.Length);
+            using MemoryStream ms = new();
             self.CopyTo(ms);
             return ms.Capacity == ms.Length ? ms.GetBuffer() : ms.ToArray();
         }
