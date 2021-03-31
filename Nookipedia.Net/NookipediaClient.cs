@@ -72,7 +72,14 @@ namespace Nookipedia.Net
         public NameList GetVillagerNames(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
             => FetchNames<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, false, games));
 
-        public Optional<Villager>
+        public Optional<Villager[]> TryGetVillagers() => TryFetchList<Villager>();
+        public Optional<Villager[]> TryGetVillagers(string name) => TryFetchList<Villager>(("name", name));
+        public Optional<Villager[]> TryGetVillagers(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+            => TryFetchList<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, includeNHDetails, games));
+        public Optional<NameList> TryGetVillagerNames() => FetchNames<Villager>();
+        public Optional<NameList> TryGetVillagerNames(string name) => FetchNames<Villager>(("name", name));
+        public Optional<NameList> TryGetVillagerNames(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
+            => TryFetchNames<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, false, games));
 
         private static NamedValue[] BuildVillagerQuery(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
@@ -118,7 +125,8 @@ namespace Nookipedia.Net
 
         private static string BuildEndpoint(string endpoint, params NamedValue[] parameters) => $"{endpoint}?{parameters.QueryString()}";
 
-        public void Dispose() {
+        public void Dispose()
+        {
             Client.Dispose();
             GC.SuppressFinalize(this);
         }
