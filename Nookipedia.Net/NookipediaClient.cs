@@ -90,7 +90,7 @@ namespace Nookipedia.Net
             if (birthday > 0 && birthday <= 31) ret.Add(("birthday", birthday));
             if (includeNHDetails) ret.Add(("nhdetails", "true"));
             if (species != Species.None) ret.Add(("species", species.Value()));
-            return ret.WithRange(games, game => ("game", game)).ToArray();
+            return ret.WithRange(games, game => ("game", game.Value())).ToArray();
         }
 
         private NameList FetchNames<T>(params NamedValue[] parameters) where T : IListEndpoint, new() => Fetch<NameList>(ListEndpoint<T>.Endpoint(), parameters.Concat(("excludedetails", "true")));
