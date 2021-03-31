@@ -49,8 +49,8 @@ namespace Nookipedia.Net
         public Task<Optional<Artwork>> TryGetArtworkAsync(string name) => TryFetchSingleAsync<Artwork>(name);
         public Task<Optional<Artwork[]>> TryGetArtworksAsync() => TryFetchListAsync<Artwork>();
         public Task<Optional<Artwork[]>> TryGetArtworksAsync(bool hasfake) => TryFetchListAsync<Artwork>(("hasfake", hasfake));
-        public Task<Optional<NameList>> TryGetArtworkNames() => TryFetchNamesAsync<Artwork>();
-        public Task<Optional<NameList>> TryGetArtworkNames(bool hasfake) => TryFetchNamesAsync<Artwork>(("hasfake", hasfake));
+        public Task<Optional<NameList>> TryGetArtworkNamesAsync() => TryFetchNamesAsync<Artwork>();
+        public Task<Optional<NameList>> TryGetArtworkNamesAsync(bool hasfake) => TryFetchNamesAsync<Artwork>(("hasfake", hasfake));
 
         public Task<Recipe?> GetRecipeAsync(string name) => FetchSingleAsync<Recipe>(name);
         public Task<Recipe[]?> GetRecipesAsync(params string[] materials) => FetchListAsync<Recipe>(materials.Select(x => new NamedValue("material", x)).ToArray());
