@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,14 +65,16 @@ namespace Nookipedia.Net
 
         public Villager[] GetVillagers() => FetchList<Villager>();
         public Villager[] GetVillagers(string name) => FetchList<Villager>(("name", name));
-        public Villager[] GetVillagers(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
-            => FetchList<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
+        public Villager[] GetVillagers(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+            => FetchList<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, includeNHDetails, games));
         public NameList GetVillagerNames() => FetchNames<Villager>();
         public NameList GetVillagerNames(string name) => FetchNames<Villager>(("name", name));
-        public NameList GetVillagerNames(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
-            => FetchNames<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
+        public NameList GetVillagerNames(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
+            => FetchNames<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, false, games));
 
-        private static NamedValue[] BuildVillagerQuery(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        public Optional<Villager>
+
+        private static NamedValue[] BuildVillagerQuery(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
             IList<NamedValue> ret = new List<NamedValue>();
             if (name.Exists()) ret.Add(("name", name));
@@ -80,6 +82,7 @@ namespace Nookipedia.Net
             if (birthmonth.Exists()) ret.Add(("birthmonth", birthmonth));
             if (birthday > 0 && birthday <= 31) ret.Add(("birthday", birthday));
             if (includeNHDetails) ret.Add(("nhdetails", "true"));
+            if (species != Species.None) ret.Add(("species", species.Value()));
             return ret.WithRange(games, game => ("game", game)).ToArray();
         }
 

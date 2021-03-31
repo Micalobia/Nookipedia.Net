@@ -62,23 +62,23 @@ namespace Nookipedia.Net
 
         public Task<Villager[]?> GetVillagersAsync() => FetchListAsync<Villager>();
         public Task<Villager[]?> GetVillagersAsync(string name) => FetchListAsync<Villager>(("name", name));
-        public Task<Villager[]?> GetVillagersAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
-            => FetchListAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
+        public Task<Villager[]?> GetVillagersAsync(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+            => FetchListAsync<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, includeNHDetails, games));
         public Task<NameList?> GetVillagerNamesAsync() => FetchNamesAsync<Villager>();
         public Task<NameList?> GetVillagerNamesAsync(string name) => FetchNamesAsync<Villager>(("name", name));
-        public Task<NameList?> GetVillagerNamesAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
-            => FetchNamesAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
+        public Task<NameList?> GetVillagerNamesAsync(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
+            => FetchNamesAsync<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, false, games));
 
         public Task<Optional<Villager[]>> TryGetVillagersAsync() => TryFetchListAsync<Villager>();
         public Task<Optional<Villager[]>> TryGetVillagersAsync(string name) => TryFetchListAsync<Villager>(("name", name));
-        public Task<Optional<Villager[]>> TryGetVillagersAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
-            => TryFetchListAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, includeNHDetails, games));
+        public Task<Optional<Villager[]>> TryGetVillagersAsync(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+            => TryFetchListAsync<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, includeNHDetails, games));
         public Task<Optional<NameList>> TryGetVillagerNamesAsync() => TryFetchNamesAsync<Villager>();
         public Task<Optional<NameList>> TryGetVillagerNamesAsync(string name) => TryFetchNamesAsync<Villager>(("name", name));
-        public Task<Optional<NameList>> TryGetVillagerNamesAsync(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
-            => TryFetchNamesAsync<Villager>(BuildVillagerQuery(name, personality, birthmonth, birthday, false, games));
+        public Task<Optional<NameList>> TryGetVillagerNamesAsync(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, params Game[] games)
+            => TryFetchNamesAsync<Villager>(BuildVillagerQuery(name, species, personality, birthmonth, birthday, false, games));
 
-        private static NamedValue[] BuildVillagerQuery(string? name = null, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
+        private static NamedValue[] BuildVillagerQuery(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
             IList<NamedValue> ret = new List<NamedValue>();
             if (name.Exists()) ret.Add(("name", name));
@@ -86,6 +86,7 @@ namespace Nookipedia.Net
             if (birthmonth.Exists()) ret.Add(("birthmonth", birthmonth));
             if (birthday > 0 && birthday <= 31) ret.Add(("birthday", birthday));
             if (includeNHDetails) ret.Add(("nhdetails", "true"));
+            if (species != Species.None) ret.Add(("species", species.Value()));
             return ret.WithRange(games, game => ("game", game)).ToArray();
         }
 
