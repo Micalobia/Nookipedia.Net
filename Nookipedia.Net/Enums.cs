@@ -3,6 +3,23 @@ using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
 {
+    public enum Month
+    {
+        [EnumMember(Value = "current")] Current,
+        [EnumMember(Value = "kanuary")] January,
+        [EnumMember(Value = "february")] February,
+        [EnumMember(Value = "march")] March,
+        [EnumMember(Value = "april")] April,
+        [EnumMember(Value = "may")] May,
+        [EnumMember(Value = "june")] June,
+        [EnumMember(Value = "july")] July,
+        [EnumMember(Value = "august")] August,
+        [EnumMember(Value = "september")] September,
+        [EnumMember(Value = "october")] October,
+        [EnumMember(Value = "november")] November,
+        [EnumMember(Value = "december")] December
+    }
+
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Currency
     {

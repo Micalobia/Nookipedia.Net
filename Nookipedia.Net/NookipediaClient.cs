@@ -37,21 +37,21 @@ namespace Nookipedia.Net
 
         public Task<Bug> GetBugAsync(string name) => FetchAsync<Bug>(Bug.Endpoint(name));
         public Task<Bug[]> GetBugsAsync() => FetchAsync<Bug[]>(Bug.Endpoint());
-        public Task<RegionedList<Bug>> GetBugsAsync(string month) => FetchAsync<RegionedList<Bug>>(Bug.Endpoint(), ("month", month));
+        public Task<RegionedList<Bug>> GetBugsAsync(Month month) => FetchAsync<RegionedList<Bug>>(Bug.Endpoint(), ("month", month.Value()));
         public Task<string[]> GetBugNamesAsync() => FetchAsync<string[]>(Bug.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetBugNamesAsync(string month) => FetchAsync<RegionedList<string>>(Bug.Endpoint(), ("month", month), ("excludedetails", true));
+        public Task<RegionedList<string>> GetBugNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Bug.Endpoint(), ("month", month.Value()), ("excludedetails", true));
 
         public Task<Fish> GetFishAsync(string name) => FetchAsync<Fish>(Fish.Endpoint(name));
-        public Task<Fish[]> GetFishesAsync() => FetchAsync<Fish[]>(Fish.Endpoint());
-        public Task<RegionedList<Fish>> GetFishesAsync(string month) => FetchAsync<RegionedList<Fish>>(Fish.Endpoint(), ("month", month));
+        public Task<Fish[]> GetFishAsync() => FetchAsync<Fish[]>(Fish.Endpoint());
+        public Task<RegionedList<Fish>> GetFishAsync(Month month) => FetchAsync<RegionedList<Fish>>(Fish.Endpoint(), ("month", month.Value()));
         public Task<string[]> GetFishNamesAsync() => FetchAsync<string[]>(Fish.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetFishNamesAsync(string month) => FetchAsync<RegionedList<string>>(Fish.Endpoint(), ("month", month), ("excludedetails", true));
+        public Task<RegionedList<string>> GetFishNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Fish.Endpoint(), ("month", month.Value()), ("excludedetails", true));
 
         public Task<SeaCreature> GetSeaCreatureAsync(string name) => FetchAsync<SeaCreature>(SeaCreature.Endpoint(name));
         public Task<SeaCreature[]> GetSeaCreaturesAsync() => FetchAsync<SeaCreature[]>(SeaCreature.Endpoint());
-        public Task<RegionedList<SeaCreature>> GetSeaCreaturesAsync(string month) => FetchAsync<RegionedList<SeaCreature>>(SeaCreature.Endpoint(), ("month", month));
+        public Task<RegionedList<SeaCreature>> GetSeaCreaturesAsync(Month month) => FetchAsync<RegionedList<SeaCreature>>(SeaCreature.Endpoint(), ("month", month.Value()));
         public Task<string[]> GetSeaCreatureNamesAsync() => FetchAsync<string[]>(SeaCreature.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetSeaCreatureNamesAsync(string month) => FetchAsync<RegionedList<string>>(SeaCreature.Endpoint(), ("month", month), ("excludedetails", true));
+        public Task<RegionedList<string>> GetSeaCreatureNamesAsync(Month month) => FetchAsync<RegionedList<string>>(SeaCreature.Endpoint(), ("month", month.Value()), ("excludedetails", true));
 
         public Task<Recipe> GetRecipeAsync(string name) => FetchAsync<Recipe>(Recipe.Endpoint(name));
         public Task<Recipe[]> GetRecipesAsync(params string[] materials)
