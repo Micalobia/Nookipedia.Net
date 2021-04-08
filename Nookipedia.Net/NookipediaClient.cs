@@ -37,21 +37,21 @@ namespace Nookipedia.Net
 
         public Task<Bug> GetBugAsync(string name) => FetchAsync<Bug>(Bug.Endpoint(name));
         public Task<Bug[]> GetBugsAsync() => FetchAsync<Bug[]>(Bug.Endpoint());
-        public Task<RegionedList<Bug>> GetBugsAsync(Month month) => FetchAsync<RegionedList<Bug>>(Bug.Endpoint(), ("month", month.Value()));
+        public Task<RegionedList<Bug>> GetBugsAsync(Month month) => FetchAsync<RegionedList<Bug>>(Bug.Endpoint(), ("month", month.EnumMember()));
         public Task<string[]> GetBugNamesAsync() => FetchAsync<string[]>(Bug.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetBugNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Bug.Endpoint(), ("month", month.Value()), ("excludedetails", true));
+        public Task<RegionedList<string>> GetBugNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Bug.Endpoint(), ("month", month.EnumMember()), ("excludedetails", true));
 
         public Task<Fish> GetFishAsync(string name) => FetchAsync<Fish>(Fish.Endpoint(name));
         public Task<Fish[]> GetFishAsync() => FetchAsync<Fish[]>(Fish.Endpoint());
-        public Task<RegionedList<Fish>> GetFishAsync(Month month) => FetchAsync<RegionedList<Fish>>(Fish.Endpoint(), ("month", month.Value()));
+        public Task<RegionedList<Fish>> GetFishAsync(Month month) => FetchAsync<RegionedList<Fish>>(Fish.Endpoint(), ("month", month.EnumMember()));
         public Task<string[]> GetFishNamesAsync() => FetchAsync<string[]>(Fish.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetFishNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Fish.Endpoint(), ("month", month.Value()), ("excludedetails", true));
+        public Task<RegionedList<string>> GetFishNamesAsync(Month month) => FetchAsync<RegionedList<string>>(Fish.Endpoint(), ("month", month.EnumMember()), ("excludedetails", true));
 
         public Task<SeaCreature> GetSeaCreatureAsync(string name) => FetchAsync<SeaCreature>(SeaCreature.Endpoint(name));
         public Task<SeaCreature[]> GetSeaCreaturesAsync() => FetchAsync<SeaCreature[]>(SeaCreature.Endpoint());
-        public Task<RegionedList<SeaCreature>> GetSeaCreaturesAsync(Month month) => FetchAsync<RegionedList<SeaCreature>>(SeaCreature.Endpoint(), ("month", month.Value()));
+        public Task<RegionedList<SeaCreature>> GetSeaCreaturesAsync(Month month) => FetchAsync<RegionedList<SeaCreature>>(SeaCreature.Endpoint(), ("month", month.EnumMember()));
         public Task<string[]> GetSeaCreatureNamesAsync() => FetchAsync<string[]>(SeaCreature.Endpoint(), ("excludedetails", true));
-        public Task<RegionedList<string>> GetSeaCreatureNamesAsync(Month month) => FetchAsync<RegionedList<string>>(SeaCreature.Endpoint(), ("month", month.Value()), ("excludedetails", true));
+        public Task<RegionedList<string>> GetSeaCreatureNamesAsync(Month month) => FetchAsync<RegionedList<string>>(SeaCreature.Endpoint(), ("month", month.EnumMember()), ("excludedetails", true));
 
         public Task<Recipe> GetRecipeAsync(string name) => FetchAsync<Recipe>(Recipe.Endpoint(name));
         public Task<Recipe[]> GetRecipesAsync(params string[] materials)
@@ -77,12 +77,12 @@ namespace Nookipedia.Net
         private static IEnumerable<NamedValue> BuildVillagerQuery(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
         {
             if (name.Exists()) yield return ("name", name);
-            if (personality != Personality.None) yield return ("personality", personality.Value());
+            if (personality != Personality.None) yield return ("personality", personality.EnumMember());
             if (birthmonth.Exists()) yield return ("birthmonth", birthmonth);
             if (birthday > 0 && birthday <= 31) yield return ("birthday", birthday);
             if (includeNHDetails) yield return ("nhdetails", "true");
-            if (species != Species.None) yield return ("species", species.Value());
-            foreach (Game game in games) yield return ("game", game.Value());
+            if (species != Species.None) yield return ("species", species.EnumMember());
+            foreach (Game game in games) yield return ("game", game.EnumMember());
         }
 
         #region Fetch

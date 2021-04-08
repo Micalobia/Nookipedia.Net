@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Nookipedia.Net
@@ -46,31 +47,12 @@ namespace Nookipedia.Net
             while (reader.TokenType != token) reader.Read();
         }
 
-        //public static IList<T> With<T>(this IList<T> self, T value, bool mutate = true)
-        //{
-        //    if (mutate)
-        //    {
-        //        self.Add(value);
-        //        return self;
-        //    }
-        //    else
-        //    {
-        //        List<T> ret = new(self.Count + 1);
-        //        ret.AddRange(self);
-        //        ret.Add(value);
-        //        return ret;
-        //    }
-        //}
-
-        //public static IList<T> WithRange<T>(this IList<T> self, IEnumerable<T> elements) => elements.Aggregate(self, (_self, element) => self.With(element));
-        //public static IList<T> WithRange<T, K>(this IList<T> self, IEnumerable<K> elements, Func<K, T> func) => elements.Aggregate(self, (_self, element) => self.With(func(element)));
-
         public static bool Exists<T>(this T? self) where T : class => self is not null;
 
         public static NameValueCollection Query<T>(this IEnumerable<Tuple<string, T>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple?.Item2?.ToString()));
         public static NameValueCollection Query(this IEnumerable<Tuple<string, string>> self) => self.Aggregate(new NameValueCollection(self.Count()), (query, tuple) => query.With(tuple.Item1, tuple.Item2));
 
-        public static string? Value<T>(this T self) where T : Enum
+        public static string? EnumMember<T>(this T self) where T : Enum
             => typeof(T)
                 .GetTypeInfo()
                 .DeclaredMembers
