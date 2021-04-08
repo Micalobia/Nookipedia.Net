@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Nookipedia.Net
@@ -58,12 +59,5 @@ namespace Nookipedia.Net
                 }
             }
         }
-    }
-
-    public record BaseNookObject
-    {
-        [JsonPropertyName("name")] public string? Name { get; init; }
-        [JsonPropertyName("url")] public string? URL { get; init; }
-        [JsonPropertyName("image_url")] public string? ImageURL { get; init; }
     }
 }
