@@ -6,7 +6,7 @@ namespace Nookipedia.Net.Test
     {
         static void Main(string[] args)
         {
-            using NookipediaAsyncClient client = new(Environment.GetEnvironmentVariable("NOOKIPEDIA_TOKEN"));
+            using NookipediaClient client = new(Environment.GetEnvironmentVariable("NOOKIPEDIA_TOKEN"));
             // This is here just to have something to run against, it isn't a formal testing thing.
         }
     }
