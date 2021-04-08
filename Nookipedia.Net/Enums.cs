@@ -6,7 +6,7 @@ namespace Nookipedia.Net
     public enum Month
     {
         [EnumMember(Value = "current")] Current,
-        [EnumMember(Value = "kanuary")] January,
+        [EnumMember(Value = "january")] January,
         [EnumMember(Value = "february")] February,
         [EnumMember(Value = "march")] March,
         [EnumMember(Value = "april")] April,
