@@ -21,6 +21,111 @@ namespace Nookipedia.Net
     }
 
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum ClothingCategory
+    {
+        [EnumMember(Value = "Other")] Other,
+        [EnumMember(Value = "Headwear")] Headwear,
+        [EnumMember(Value = "Shoes")] Shoes,
+        [EnumMember(Value = "Bags")] Bags,
+        [EnumMember(Value = "Tops")] Tops,
+        [EnumMember(Value = "Dress-Up")] DressUp,
+        [EnumMember(Value = "Socks")] Socks,
+        [EnumMember(Value = "Accessories")] Accessories,
+        [EnumMember(Value = "Bottoms")] Bottoms,
+        [EnumMember(Value = "Umbrellas")] Umbrellas
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum ClothingLabel
+    {
+        [EnumMember(Value = "Goth")] Goth,
+        [EnumMember(Value = "Formal")] Formal,
+        [EnumMember(Value = "Party")] Party,
+        [EnumMember(Value = "Sporty")] Sporty,
+        [EnumMember(Value = "Work")] Work,
+        [EnumMember(Value = "Vacation")] Vacation,
+        [EnumMember(Value = "Theatrical")] Theatrical,
+        [EnumMember(Value = "Fairy Tale")] FairyTale,
+        [EnumMember(Value = "Outdoorsy")] Outdoorsy,
+        [EnumMember(Value = "Comfy")] Comfy,
+        [EnumMember(Value = "Everyday")] Everyday
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum ClothingStyle
+    {
+        [EnumMember(Value = "Gorgeous")] Gorgeous,
+        [EnumMember(Value = "Active")] Active,
+        [EnumMember(Value = "Cool")] Cool,
+        [EnumMember(Value = "Elegant")] Elegant,
+        [EnumMember(Value = "Simple")] Simple,
+        [EnumMember(Value = "Cute")] Cute
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum Color
+    {
+        [EnumMember(Value = "Colorful")] Colorful,
+        [EnumMember(Value = "Gray")] Gray,
+        [EnumMember(Value = "Aqua")] Aqua,
+        [EnumMember(Value = "Pink")] Pink,
+        [EnumMember(Value = "Purple")] Purple,
+        [EnumMember(Value = "White")] White,
+        [EnumMember(Value = "Red")] Red,
+        [EnumMember(Value = "Orange")] Orange,
+        [EnumMember(Value = "Brown")] Brown,
+        [EnumMember(Value = "Green")] Green,
+        [EnumMember(Value = "Black")] Black,
+        [EnumMember(Value = "Beige")] Beige,
+        [EnumMember(Value = "Yellow")] Yellow,
+        [EnumMember(Value = "Blue")] Blue
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum PhotoCategory
+    {
+        [EnumMember(Value = "Posters")] Posters,
+        [EnumMember(Value = "Photos")] Photos
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum ClothingGender
+    {
+        [EnumMember(Value = "")] None,
+        [EnumMember(Value = "Manly")] Manly,
+        [EnumMember(Value = "Womanly")] Womanly,
+        [EnumMember(Value = "Free")] Free
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum FurnitureCategory
+    {
+        [EnumMember(Value = "Housewares")] Housewares,
+        [EnumMember(Value = "Miscellaneous")] Miscellaneous,
+        [EnumMember(Value = "Wall-Mounted")] WallMounted
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum FurnitureHHACategory
+    {
+        [EnumMember(Value = "")] Missing,
+        [EnumMember(Value = "Pet")] Pet,
+        [EnumMember(Value = "AC")] AC,
+        [EnumMember(Value = "Clock")] Clock,
+        [EnumMember(Value = "Lighting")] Lighting,
+        [EnumMember(Value = "Trash")] Trash,
+        [EnumMember(Value = "Audio")] Audio,
+        [EnumMember(Value = "Small Goods")] SmallGoods,
+        [EnumMember(Value = "Appliance")] Appliance,
+        [EnumMember(Value = "None")] None,
+        [EnumMember(Value = "Musical Instrument")] MusicalInstrument,
+        [EnumMember(Value = "Plant")] Plant,
+        [EnumMember(Value = "TV")] TV,
+        [EnumMember(Value = "Dresser")] Dresser,
+        [EnumMember(Value = "Doll")] Doll
+    }
+
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum Currency
     {
         [EnumMember(Value = "")] None,
