@@ -65,6 +65,14 @@ namespace Nookipedia.Net
         public Task<string[]> GetArtworkNamesAsync() => FetchAsync<string[]>(Artwork.Endpoint(), ("excludedetails", true));
         public Task<string[]> GetArtworkNamesAsync(bool hasFake) => FetchAsync<string[]>(Artwork.Endpoint(), ("hasfake", hasFake), ("excludedetails", true));
 
+        public Task<Photo> GetPhotoAsync(string name) => FetchAsync<Photo>(Photo.Endpoint(name));
+        public Task<Photo[]> GetPhotosAsync() => FetchAsync<Photo[]>(Photo.Endpoint());
+        public Task<string[]> GetPhotoNamesAsync() => FetchAsync<string[]>(Photo.Endpoint(), ("excludedetails", true));
+
+        public Task<Clothing> GetClothingAsync(string name) => FetchAsync<Clothing>(Clothing.Endpoint(name));
+        public Task<Clothing[]> GetClothesAsync() => FetchAsync<Clothing[]>(Clothing.Endpoint());
+        public Task<string[]> GetClothingNamesAsync() => FetchAsync<string[]>(Clothing.Endpoint(), ("excludedetails", true));
+
         public Task<Villager[]> GetVillagersAsync() => FetchAsync<Villager[]>(Villager.Endpoint());
         public Task<Villager[]> GetVillagersAsync(string name) => FetchAsync<Villager[]>(Villager.Endpoint(), ("name", name));
         public Task<Villager[]> GetVillagersAsync(string? name = null, Species species = Species.None, Personality personality = Personality.None, string? birthmonth = null, int birthday = -1, bool includeNHDetails = false, params Game[] games)
